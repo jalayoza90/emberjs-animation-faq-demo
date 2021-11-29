@@ -1,0 +1,4 @@
+.swiper-button-prev, .swiper-button-next {
+    bottom: 0 !important;
+    top: 80%;
+}

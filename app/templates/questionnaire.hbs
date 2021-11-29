@@ -1,0 +1,65 @@
+{{page-title "Questionnaire"}}
+<h5>{{@model.questionnaire.description}}</h5>
+<hr />
+
+{{!-- Sliders demo --}}
+
+
+
+<div class="main bg-light p-3">
+    <BsForm @formLayout="vertical" as |form|>
+
+
+
+        {{#swiper-container keyboard=true mousewheel=true navigation=true}}
+        {{#each @model.questionnaire.questions as |questions|}}
+
+        {{#swiper-slide}}
+        <div class="form-row align-items-center">
+
+            <div class="col-auto mb-3" hidden={{if (questionnaire-helper questions "multiple-choice" ) false true}}>
+                <strong class="col-lg-12">{{questions.headline}}</strong>
+                <hr />
+                <div class="col-lg-12">
+                    {{#each questions.choices as |choise|}}
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" id={{choise.label}} type="checkbox" checked={{choise.selected}}
+                            onchange={{action "multipleChoice" value="target.checked" }}
+                            value={{questions.identifier}} />
+                        <label class="form-check-label" for={{choise.label}}>
+                            {{choise.label}}
+                        </label>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+
+            <div class="col-auto mb-3" hidden={{if (questionnaire-helper questions "textarea" ) false true}}>
+                <strong class="col-lg-12">
+                    {{questions.headline}}
+                </strong>
+                <div class="col-lg-12 form-group purple-border">
+
+                    <Textarea @placeholder={{questions.headline}} class="form-control" rows="3" cols="50" />
+                </div>
+            </div>
+
+            <div class="col-auto mb-3" hidden={{if (questionnaire-helper questions "date" ) false true}}>
+                <strong class="col-lg-12">
+                    {{questions.headline}}
+                </strong>
+                <EmberFlatpickr @date="2021-11-28" class="form-control" @onChange="" />
+            </div>
+        </div>
+        {{/swiper-slide}}
+
+        {{/each}}
+        {{/swiper-container}}
+    </BsForm>
+    <p class="text-center text-info">
+        Für nächste/vorherige Frage wischen
+    </p>
+</div>
+
+
+{{outlet}}
